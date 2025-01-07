@@ -1,0 +1,5 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/additionalCounters/3840p60/partial_movie_files/addCounters/696123294_3615055229_959091174.mp4'
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/additionalCounters/3840p60/partial_movie_files/addCounters/1167045716_2642111690_2061275982.mp4'
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/additionalCounters/3840p60/partial_movie_files/addCounters/1167045716_3606988680_1501838319.mp4'
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/additionalCounters/3840p60/partial_movie_files/addCounters/1167045716_1141282389_2698935214.mp4'

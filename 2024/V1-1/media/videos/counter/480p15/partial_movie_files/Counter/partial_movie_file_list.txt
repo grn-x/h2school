@@ -1,0 +1,8 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/counter/480p15/partial_movie_files/Counter/1185818338_3481313683_576867302.mp4'
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/counter/480p15/partial_movie_files/Counter/624642324_3467779383_1196810540.mp4'
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/counter/480p15/partial_movie_files/Counter/624642324_2593305693_2370023533.mp4'
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/counter/480p15/partial_movie_files/Counter/624642324_719741501_3062542562.mp4'
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/counter/480p15/partial_movie_files/Counter/624642324_2354374403_2946740770.mp4'
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/counter/480p15/partial_movie_files/Counter/624642324_1098830952_911650958.mp4'
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/counter/480p15/partial_movie_files/Counter/624642324_3636024140_3267503559.mp4'

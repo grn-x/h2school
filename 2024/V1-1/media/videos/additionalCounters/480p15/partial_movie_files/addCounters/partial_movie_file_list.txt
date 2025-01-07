@@ -1,0 +1,2 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/bened/Development/Python/ManimCe/V1-1/media/videos/additionalCounters/480p15/partial_movie_files/addCounters/1185818338_2508925503_3987201216.mp4'
