@@ -59,8 +59,8 @@ manim -pql script_name.py SceneName
 > The `-p` flag can be combined with any quality flag, such as `-pql` for low-quality previews.
 
 ### Demo
-
-<!--Make the GIF redirect to the original resolution and smaller-sized MP4. GIFs are inefficient.-->
+Small overview of some results:
+<!--Make the GIF redirect to the original resolution and smaller-sized MP4. GIFs fucking suck.-->
 <a href="https://github.com/user-attachments/assets/d524e1d9-1984-40d3-962e-2f462cfa0638">
   <img src="https://github.com/user-attachments/assets/c649719d-00cb-4bf1-b18c-a36bb26e654b" alt="Manim Demo">
 </a>
@@ -73,5 +73,13 @@ This directory contains simple Matplotlib scripts used for data analysis and vis
 
 ### Demo
 
-![Matplotlib Visualization](https://github.com/user-attachments/assets/c6b25b54-61bc-40f7-9fcd-c738049958ec)  
-![Matplotlib Visualization](https://github.com/user-attachments/assets/bb67437e-6454-40ca-887c-bcd92c528ae9)
+<div style="display: flex; justify-content: space-around;">
+  <div style="flex: 1; text-align: center;">
+    <img src="https://github.com/user-attachments/assets/c6b25b54-61bc-40f7-9fcd-c738049958ec" alt="Matplotlib Visualization" style="height: 200px;">
+    <p>Difference in concentration and impact</p>
+  </div>
+  <div style="flex: 1; text-align: center;">
+    <img src="https://github.com/user-attachments/assets/bb67437e-6454-40ca-887c-bcd92c528ae9" alt="Matplotlib Visualization" style="height: 200px;">
+    <p>Comparing emission trends</p>
+  </div>
+</div>
