@@ -1,6 +1,6 @@
 # This file is used internally by FFMPEG.
-file 'file:C:/Users/bened/Development/Python/ManimCe/V2-1/media/videos/Approximation/480p15/partial_movie_files/Approximation/1185818338_4288027761_223132457.mp4'
-file 'file:C:/Users/bened/Development/Python/ManimCe/V2-1/media/videos/Approximation/480p15/partial_movie_files/Approximation/624642324_2944270173_299286.mp4'
-file 'file:C:/Users/bened/Development/Python/ManimCe/V2-1/media/videos/Approximation/480p15/partial_movie_files/Approximation/624642324_294096970_1437993764.mp4'
-file 'file:C:/Users/bened/Development/Python/ManimCe/V2-1/media/videos/Approximation/480p15/partial_movie_files/Approximation/624642324_3764691123_1435047783.mp4'
-file 'file:C:/Users/bened/Development/Python/ManimCe/V2-1/media/videos/Approximation/480p15/partial_movie_files/Approximation/624642324_1704852926_3367309454.mp4'
+file 'file:C:/Users/bened/PycharmProjects/h2school/2024/V1-2/media/videos/Approximation/480p15/partial_movie_files/Approximation/1185818338_4288027761_223132457.mp4'
+file 'file:C:/Users/bened/PycharmProjects/h2school/2024/V1-2/media/videos/Approximation/480p15/partial_movie_files/Approximation/624642324_2944270173_299286.mp4'
+file 'file:C:/Users/bened/PycharmProjects/h2school/2024/V1-2/media/videos/Approximation/480p15/partial_movie_files/Approximation/624642324_294096970_1437993764.mp4'
+file 'file:C:/Users/bened/PycharmProjects/h2school/2024/V1-2/media/videos/Approximation/480p15/partial_movie_files/Approximation/624642324_1552331449_1435047783.mp4'
+file 'file:C:/Users/bened/PycharmProjects/h2school/2024/V1-2/media/videos/Approximation/480p15/partial_movie_files/Approximation/624642324_1704852926_1290680536.mp4'

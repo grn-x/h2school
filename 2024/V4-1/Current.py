@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 from manim import *
 
@@ -31,7 +33,10 @@ def ticks_to_exclude(nums, real_step, real_max=None):
 class Current(Scene):
     def construct(self):
 
-        with open(r'\FrameExtractor\out\current\AuswertungTimestamps.txt', 'r') as file:
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))#, '..'))
+        file_path = os.path.join(project_root, 'FrameExtractor', 'out', 'current', 'AuswertungTimestamps.txt')
+
+        with open(file_path, 'r') as file:
             y = [float(line.strip()) for line in file]
         x = list(range(len(y)))
 
