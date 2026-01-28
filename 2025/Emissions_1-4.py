@@ -6,7 +6,7 @@ from matplotlib.ticker import FuncFormatter
 START_YEAR = 1973
 END_YEAR = 2023
 path = r'../sources/annual-co2-emissions-per-country/annual-co2-emissions-per-country.csv'
-matplotlib.use('Qt5Agg')
+#matplotlib.use('Qt5Agg')
 # source: https://ourworldindata.org/grapher/annual-co2-emissions-per-country?v=1&csvType=full&useColumnShortNames=false
 # https://github.com/grn-x/h2school/blob/main/sources/annual-co2-emissions-per-country/readme.md
 

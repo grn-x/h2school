@@ -6,7 +6,7 @@ import matplotlib
 # GWP Explanation: https://en.wikipedia.org/wiki/Global_warming_potential
 # GWP Values: https://ghgprotocol.org/sites/default/files/2024-08/Global-Warming-Potential-Values%20%28August%202024%29.pdf
 import matplotlib.pyplot as plt
-matplotlib.use('Qt5Agg')
+#matplotlib.use('Qt5Agg')
 
 import matplotlib.pyplot as plt
 
