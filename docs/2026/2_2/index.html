@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stromverbrauch Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script> <!-- Use old plotly version for the title to work??? latest:https://cdn.plot.ly/plotly-3.3.0.min.js -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .chart-container {
+            margin-bottom: 40px;
+        }
+        .legend {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .legend-item {
+            display: inline-block;
+            margin-right: 20px;
+            font-size: 14px;
+        }
+        .legend-color {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            border-radius: 3px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stromverbrauch der Wettbewerbsteilnehmer</h1>
+        <p class="subtitle">Analyse von Haushalts-Stromverbräuchen im Vergleich zum deutschen Durchschnitt</p>
+
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #3498db;"></span>
+                <span>Standard-Haushalt</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #e74c3c;"></span>
+                <span>Mit Sonderausstattung (PV/E-Auto/Wärmepumpe)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #f39c12;"></span>
+                <span>Deutscher Durchschnitt 2024</span>
+            </div>
+        </div>
+
+        <div id="chart1" class="chart-container"></div>
+        <div id="chart2" class="chart-container"></div>
+        <div id="chart3" class="chart-container"></div>
+        <div id="chart4" class="chart-container"></div>
+    </div>
+
+    <script>
+        const data = [
+            {name: "Haushalt 1", verbrauch: 3800, bewohner: 4, qm: 120, info: ""},
+            {name: "Haushalt 2", verbrauch: 4250, bewohner: 4.5, qm: 167, info: ""},
+            {name: "Haushalt 3", verbrauch: 4100, bewohner: 4, qm: 167, info: ""},
+            {name: "Haushalt 4", verbrauch: 3545, bewohner: 5, qm: 240, info: ""},
+            {name: "Haushalt 5", verbrauch: 3700, bewohner: 3, qm: 97, info: ""},
+            {name: "Haushalt 6", verbrauch: 6230, bewohner: 6, qm: 350, info: "8,68 kWp PV Anlage, E-Auto, Solaranlage + Holzofen"},
+            {name: "Haushalt 7", verbrauch: 7800, bewohner: 4, qm: 200, info: "PV Anlage / e Auto / Wärmepumpe"},
+            {name: "Deutscher Durchschnitt 2024", verbrauch: 3390, bewohner: 2.02, qm: 94, info: "Referenzwert"}
+        ];
+
+        // Kategorisierung
+        const hatSonderausstattung = (info) => {
+            const lowerInfo = info.toLowerCase();
+            return lowerInfo.includes('pv') || lowerInfo.includes('e-auto') ||
+                   lowerInfo.includes('wärmepumpe') || lowerInfo.includes('solar');
+        };
+
+        const istDurchschnitt = (name) => name.includes('Durchschnitt'); //schwierige lösung; TODO
+
+        // aufteilen
+        const standard = data.filter(d => !hatSonderausstattung(d.info) && !istDurchschnitt(d.name));
+        const mitSonder = data.filter(d => hatSonderausstattung(d.info));
+        const durchschnitt = data.filter(d => istDurchschnitt(d.name));
+
+        // Scatter 1: Verbrauch pro Person
+        const trace1_standard = {
+            x: standard.map(d => d.bewohner),
+            y: standard.map(d => d.verbrauch / d.bewohner),
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Standard-Haushalt',
+            marker: {
+                size: standard.map(d => d.qm / 5),
+                color: '#3498db',
+                line: { width: 2, color: '#2980b9' }
+            },
+            text: standard.map(d =>
+                `<b>${d.name}</b><br>` +
+                `Verbrauch: ${d.verbrauch} kWh<br>` +
+                `Pro Person: ${Math.round(d.verbrauch / d.bewohner)} kWh<br>` +
+                `Bewohner: ${d.bewohner}<br>` +
+                `Fläche: ${d.qm} m²<br>` +
+                `Info: ${d.info || 'keine'}`
+            ),
+            hovertemplate: '%{text}<extra></extra>'
+        };
+
+        const trace1_sonder = {
+            x: mitSonder.map(d => d.bewohner),
+            y: mitSonder.map(d => d.verbrauch / d.bewohner),
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Mit Sonderausstattung',
+            marker: {
+                size: mitSonder.map(d => d.qm / 5),
+                color: '#e74c3c',
+                line: { width: 2, color: '#c0392b' }
+            },
+            text: mitSonder.map(d =>
+                `<b>${d.name}</b><br>` +
+                `Verbrauch: ${d.verbrauch} kWh<br>` +
+                `Pro Person: ${Math.round(d.verbrauch / d.bewohner)} kWh<br>` +
+                `Bewohner: ${d.bewohner}<br>` +
+                `Fläche: ${d.qm} m²<br>` +
+                `Ausstattung: ${d.info}`
+            ),
+            hovertemplate: '%{text}<extra></extra>'
+        };
+
+        const trace1_durch = {
+            x: durchschnitt.map(d => d.bewohner),
+            y: durchschnitt.map(d => d.verbrauch / d.bewohner),
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Deutscher Durchschnitt',
+            marker: {
+                size: 25,
+                color: '#f39c12',
+                symbol: 'star',
+                line: { width: 2, color: '#d68910' }
+            },
+            text: durchschnitt.map(d =>
+                `<b>${d.name}</b><br>` +
+                `Verbrauch: ${d.verbrauch} kWh<br>` +
+                `Pro Person: ${Math.round(d.verbrauch / d.bewohner)} kWh<br>` +
+                `Bewohner: ${d.bewohner}<br>` +
+                `Fläche: ${d.qm} m²`
+            ),
+            hovertemplate: '%{text}<extra></extra>'
+        };
+
+        const layout1 = {
+            title: '1. Verbrauch pro Person vs. Anzahl Bewohner<br><sub>Punktgröße = Wohnfläche</sub>',
+            xaxis: { title: 'Anzahl Bewohner' },
+            yaxis: { title: 'Stromverbrauch pro Person (kWh/Jahr)' },
+            hovermode: 'closest',
+            showlegend: true
+        };
+
+        Plotly.newPlot('chart1', [trace1_standard, trace1_sonder, trace1_durch], layout1);
+
+        // Scatter 2: Verbrauch pro m2
+        const trace2_standard = {
+            x: standard.map(d => d.qm),
+            y: standard.map(d => d.verbrauch / d.qm),
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Standard-Haushalt',
+            marker: {
+                size: standard.map(d => d.bewohner * 5),
+                color: '#3498db',
+                line: { width: 2, color: '#2980b9' }
+            },
+            text: standard.map(d =>
+                `<b>${d.name}</b><br>` +
+                `Verbrauch: ${d.verbrauch} kWh<br>` +
+                `Pro m²: ${Math.round(d.verbrauch / d.qm)} kWh<br>` +
+                `Fläche: ${d.qm} m²<br>` +
+                `Bewohner: ${d.bewohner}<br>` +
+                `Info: ${d.info || 'keine'}`
+            ),
+            hovertemplate: '%{text}<extra></extra>'
+        };
+
+        const trace2_sonder = {
+            x: mitSonder.map(d => d.qm),
+            y: mitSonder.map(d => d.verbrauch / d.qm),
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Mit Sonderausstattung',
+            marker: {
+                size: mitSonder.map(d => d.bewohner * 5),
+                color: '#e74c3c',
+                line: { width: 2, color: '#c0392b' }
+            },
+            text: mitSonder.map(d =>
+                `<b>${d.name}</b><br>` +
+                `Verbrauch: ${d.verbrauch} kWh<br>` +
+                `Pro m²: ${Math.round(d.verbrauch / d.qm)} kWh<br>` +
+                `Fläche: ${d.qm} m²<br>` +
+                `Bewohner: ${d.bewohner}<br>` +
+                `Ausstattung: ${d.info}`
+            ),
+            hovertemplate: '%{text}<extra></extra>'
+        };
+
+        const trace2_durch = {
+            x: durchschnitt.map(d => d.qm),
+            y: durchschnitt.map(d => d.verbrauch / d.qm),
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Deutscher Durchschnitt',
+            marker: {
+                size: 25,
+                color: '#f39c12',
+                symbol: 'star',
+                line: { width: 2, color: '#d68910' }
+            },
+            text: durchschnitt.map(d =>
+                `<b>${d.name}</b><br>` +
+                `Verbrauch: ${d.verbrauch} kWh<br>` +
+                `Pro m²: ${Math.round(d.verbrauch / d.qm)} kWh<br>` +
+                `Fläche: ${d.qm} m²<br>` +
+                `Bewohner: ${d.bewohner}`
+            ),
+            hovertemplate: '%{text}<extra></extra>'
+        };
+
+        const layout2 = {
+            title: '2. Verbrauch pro m² vs. Wohnfläche<br><sub>Punktgröße = Anzahl Bewohner</sub>',
+            xaxis: { title: 'Wohnfläche (m²)' },
+            yaxis: { title: 'Stromverbrauch pro m² (kWh/Jahr)' },
+            hovermode: 'closest',
+            showlegend: true
+        };
+
+        Plotly.newPlot('chart2', [trace2_standard, trace2_sonder, trace2_durch], layout2);
+
+        // Balken 3: Gesamtverbrauch
+        const sortedData = [...data].sort((a, b) => a.verbrauch - b.verbrauch);
+
+        const trace3 = {
+            x: sortedData.map(d => d.name),
+            y: sortedData.map(d => d.verbrauch),
+            type: 'bar',
+            marker: {
+                color: sortedData.map(d => {
+                    if (istDurchschnitt(d.name)) return '#f39c12';
+                    if (hatSonderausstattung(d.info)) return '#e74c3c';
+                    return '#3498db';
+                }),
+                line: {
+                    color: sortedData.map(d => {
+                        if (istDurchschnitt(d.name)) return '#d68910';
+                        if (hatSonderausstattung(d.info)) return '#c0392b';
+                        return '#2980b9';
+                    }),
+                    width: 2
+                }
+            },
+            hovertext: sortedData.map(d =>
+                `<b>${d.name}</b><br>` +
+                `Verbrauch: ${d.verbrauch} kWh<br>` +
+                `Bewohner: ${d.bewohner}<br>` +
+                `Fläche: ${d.qm} m²<br>` +
+                `Pro Person: ${Math.round(d.verbrauch / d.bewohner)} kWh<br>` +
+                `Pro m²: ${Math.round(d.verbrauch / d.qm)} kWh<br>` +
+                `${d.info ? 'Ausstattung: ' + d.info : ''}`
+            ),
+            hovertemplate: '%{hovertext}<extra></extra>'
+        };
+
+        const layout3 = {
+            title: '3. Gesamtverbrauch aller Haushalte (sortiert)',
+            xaxis: {
+                title: 'Haushalt',
+                tickangle: -45
+            },
+            yaxis: { title: 'Stromverbrauch (kWh/Jahr)' },
+            hovermode: 'closest',
+            showlegend: false
+        };
+
+        Plotly.newPlot('chart3', [trace3], layout3);
+
+        // Balken 4: Verbrauch pro Bewohner (normalisiert nach Bewohneranzahl; unterschied zu scatter 1) //TODO
+        const sortedDataByPerson = [...data].sort((a, b) => (a.verbrauch / a.bewohner) - (b.verbrauch / b.bewohner));
+
+        const trace4 = {
+            x: sortedDataByPerson.map(d => d.name),
+            y: sortedDataByPerson.map(d => d.verbrauch / d.bewohner),
+            type: 'bar',
+            marker: {
+                color: sortedDataByPerson.map(d => {
+                    if (istDurchschnitt(d.name)) return '#f39c12';
+                    if (hatSonderausstattung(d.info)) return '#e74c3c';
+                    return '#3498db';
+                }),
+                line: {
+                    color: sortedDataByPerson.map(d => {
+                        if (istDurchschnitt(d.name)) return '#d68910';
+                        if (hatSonderausstattung(d.info)) return '#c0392b';
+                        return '#2980b9';
+                    }),
+                    width: 2
+                }
+            },
+            hovertext: sortedDataByPerson.map(d =>
+                `<b>${d.name}</b><br>` +
+                `Verbrauch pro Person: ${Math.round(d.verbrauch / d.bewohner)} kWh<br>` +
+                `Gesamtverbrauch: ${d.verbrauch} kWh<br>` +
+                `Bewohner: ${d.bewohner}<br>` +
+                `Fläche: ${d.qm} m²<br>` +
+                `Pro m²: ${Math.round(d.verbrauch / d.qm)} kWh<br>` +
+                `${d.info ? 'Ausstattung: ' + d.info : ''}`
+            ),
+            hovertemplate: '%{hovertext}<extra></extra>'
+        };
+
+        const layout4 = {
+            title: '4. Verbrauch pro Bewohner (normalisiert, sortiert)<br><sub>Zeigt die Effizienz unabhängig von der Haushaltsgröße</sub>',
+            xaxis: {
+                title: 'Haushalt',
+                tickangle: -45
+            },
+            yaxis: { title: 'Stromverbrauch pro Person (kWh/Jahr)' },
+            hovermode: 'closest',
+            showlegend: false
+        };
+
+        Plotly.newPlot('chart4', [trace4], layout4);
+    </script>
+</body>
+</html>
