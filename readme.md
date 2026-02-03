@@ -3,7 +3,7 @@
 ## About
 
 This repository contains a collection of scripts used to create and analyze data for our contribution to the H2@School competition.
-This multi-stage tournament, hosted by OTH Regensburg, focuses on [global warming](https://www.youtube.com/watch?v=1WCOjiKI8vU&list=PLbyh8sxxqPC6YoN5vQR9Yh3V1dD0inNu7&index=11)
+This multi-stage tournament, hosted by OTH Regensburg, focuses on [global warming](https://www.youtube.com/watch?v=VB5QY8aW4PI&list=OLAK5uy_mcdIYSO2Ir4juv_bWBstX9QQLLT5FVaoM&index=12)
 and solutions for transitioning to a more sustainable energy system.
 
 The repository is organized according to the different phases of the contest.
@@ -11,7 +11,7 @@ The repository is organized according to the different phases of the contest.
 For transparency, as required by the jury, this project is publicly accessible.
 
 > [!NOTE]  
-> For this year’s contribution, we created a [website](https://github.com/grn-x/H2Sites) hosted in a different repository.
+> For our 2025 contribution, we created a [website](https://github.com/grn-x/H2Sites) hosted in a different repository.
 
 ---
 
@@ -83,3 +83,11 @@ This directory contains simple Matplotlib scripts used for data analysis and vis
     <p>Comparing emission trends</p>
   </div>
 </div>
+
+## `2026`
+
+That years contribution also consists of a Matplotlib script as well as a simple website published using this repository's GitHub-Pages.
+See `~/docs/2026/2_2/index.html` -> [https://grn-x.github.io/h2school/2026/2_2/](https://grn-x.github.io/h2school/2026/2_2/)
+
+For the 
+![2_3-charts.py result](https://github.com/user-attachments/assets/8016c659-977a-4b07-8887-52accee49e67)
